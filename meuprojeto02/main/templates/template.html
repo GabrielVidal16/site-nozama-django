@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>
+        
+    </title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="container">
+                <a class="navbar-brand2" href="/paginainicial">Página Inicial</a>
+                <a class="navbar-brand2" href="/contatos">Contatos</a>
+                <a class="navbar-brand2" href="/usuarios">Usuários</a>
+                <a class="navbar-brand2" href="/cadastro">Cadastro</a>
+                <button class="navbar-toggler" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse">
+                </div>
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="/guia">Guia</a>
+                        <a class="nav-link" href="/sobre">Sobre</a>
+                        <a class="nav-link" href="/">Sair</a>
+                    </div>
+                </div>
+                    
+                    <ul class="navbar-nav">
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% block conteudo %}
+    {% endblock %}
+</body>
+</html>

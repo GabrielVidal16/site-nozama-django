@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="pt-br">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 25px;
+        }
+
+        .login-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .imgpython {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 25px;
+            font-family: 'Segoe UI';
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .botaologin:hover {
+            background-color: #0056b3;
+        }
+
+        .botao {
+            display: inline-block;
+            margin-top: 15px;
+            color: white;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .botao:hover {
+            background-color: #0056b3;
+        }
+
+        /* Desabilitar botão por padrão */
+        .botaologin:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <img class="imgpython" src="{% static 'giphy.gif' %}" alt="GIF de login">
+        <h1>Sistema de Chamados Django</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                <input class="inputlogin" type="text" name="username" id="username" placeholder="Email">
+            </div>
+            <div>
+                <input class="inputlogin" type="password" name="password" id="password" placeholder="Senha" style="margin: 10px">
+            </div>
+
+            <button type="submit" class="botaologin" id="submit-button" disabled>Entrar</button>
+        </form>
+
+        <a class="botao" href="/contato">Contato</a>
+    </div>
+
+    <script>
+        // Função para ativar/desativar o botão
+        function toggleSubmitButton() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var submitButton = document.getElementById('submit-button');
+
+            // Ativa o botão se ambos os campos estiverem preenchidos
+            if (username && password) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+
+        // Adiciona event listeners nos campos de entrada
+        document.getElementById('username').addEventListener('input', toggleSubmitButton);
+        document.getElementById('password').addEventListener('input', toggleSubmitButton);
+
+        
+    </script>
+</body>
+
+</html>

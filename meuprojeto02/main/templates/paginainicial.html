@@ -1,0 +1,11 @@
+{% extends "template.html" %}
+{%block titulo%}
+Página inicial
+{%endblock%}
+{% block conteudo%}
+{% load static %}
+<h2 style="text-align: center; font-size: 25px; font-family: Segoe UI;">Bem vindo: {{ nome_usuario }}!</h2>
+    <div class="divimg">
+      <img class="imgpython"  src="{% static 'giphy.gif' %}" alt="">
+      </div>
+{%endblock%}

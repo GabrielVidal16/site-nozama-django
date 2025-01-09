@@ -1,0 +1,224 @@
+{% extends "template.html" %}
+{% block titulo %}
+O que é Django?
+{% endblock %}
+{% block conteudo %}
+{% load static %}
+<link rel="stylesheet" href="{{ STATIC_URL }}static/style.css">
+<title>Instalando o Django</title>
+
+<style>
+     /* Definindo fontes e cores */
+     body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fc;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h1.titulo-principal {
+        font-size: 36px;
+        color: #007BFF;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    h2 {
+        font-size: 28px;
+        color: #007BFF;
+        margin-bottom: 10px;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    h3 {
+        font-size: 24px;
+        margin-top: 20px;
+        color: #333;
+        font-weight: 500;
+    }
+
+    pre {
+        background-color: #282c34;
+        color: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        font-family: 'Courier New', Courier, monospace;
+        margin: 10px 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    ul {
+        list-style-type: disc;
+        margin-left: 40px;
+        font-size: 16px;
+        color: #555;
+    }
+
+    .img-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    img {
+        max-width: 60%;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        h1.titulo-principal {
+            font-size: 28px;
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        .container {
+            padding: 10px;
+        }
+
+        img {
+            max-width: 80%;
+        }
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h1 class="titulo-principal">Instalando o Django</h1>
+
+        <h2>Etapas</h2>
+
+        <h3>1. Instalar o venv</h3>
+        <p>Primeiramente, você precisa instalar o <strong>virtualenv</strong>, uma ferramenta para criar ambientes virtuais Python isolados. Isso ajuda a manter as dependências do projeto separadas de outras instalações no seu sistema.</p>
+        <pre>pip install virtualenv</pre>
+
+        <h3>2. Criar um Ambiente Virtual</h3>
+        <p>Depois de instalar o virtualenv, você deve criar um novo ambiente virtual no diretório do seu projeto. Isso vai garantir que o Django e outras bibliotecas sejam instalados apenas nesse ambiente, sem interferir no seu sistema global.</p>
+        <pre>python -m venv .venv</pre>
+
+        <h3>3. Ativar o Ambiente Virtual</h3>
+        <p>Com o ambiente virtual criado, você precisa ativá-lo. Isso irá garantir que o Python e os pacotes instalados sejam isolados e específicos para esse projeto.</p>
+        <pre>.\\.venv\\Scripts\\activate</pre>
+
+        <h3>4. Atualizar o pip</h3>
+        <p>Agora, atualize o <strong>pip</strong> para garantir que você tenha a versão mais recente do instalador de pacotes Python.</p>
+        <pre>python.exe -m pip install --upgrade pip</pre>
+
+        <h3>5. Instalar o Django</h3>
+        <p>Com o ambiente virtual ativado e o pip atualizado, agora você pode instalar o Django. Use a versão que você deseja (exemplo: 5.0.6) ou a mais recente.</p>
+        <pre>pip install Django==5.0.6</pre>
+
+        <h3>6. Verificar a instalação do Django</h3>
+        <p>Após a instalação, verifique se o Django foi instalado corretamente executando o comando abaixo. Isso exibirá a versão do Django instalada.</p>
+        <pre>django-admin --version</pre>
+
+        <h3>7. Instalar o Conector MySQL</h3>
+        <p>Se você pretende usar o MySQL como banco de dados no Django, instale o conector necessário para conectar o Django ao MySQL.</p>
+        <pre>pip install mysql-connector</pre>
+
+        <h3>8. Criar um novo Projeto Django</h3>
+        <p>Agora, crie um novo projeto Django. O comando abaixo cria a estrutura básica de um projeto Django no diretório "meuprojeto".</p>
+        <pre>django-admin startproject meuprojeto</pre>
+
+        <h3>9. Acessar o Diretório do Projeto</h3>
+        <p>Depois de criar o projeto, entre no diretório do projeto que foi criado, usando o comando abaixo.</p>
+        <pre>cd meuprojeto</pre>
+
+        <h3>10. Explorar a Estrutura do Projeto</h3>
+        <p>Agora que o projeto foi criado, explore a estrutura de diretórios e arquivos gerados. Esses arquivos são fundamentais para o gerenciamento e funcionamento do seu projeto Django.</p>
+        <ul>
+            <li><code>manage.py</code>: Gerencia tarefas do Django, como migrações e testes.</li>
+            <li><code>meuprojeto/settings.py</code>: Configurações globais do seu projeto.</li>
+            <li><code>meuprojeto/urls.py</code>: Mapeamento das URLs para as views da aplicação.</li>
+            <li><code>meuprojeto/wsgi.py</code>: Ponto de entrada para o servidor web do Django.</li>
+        </ul>
+
+        <h3>11. Criar um novo Aplicativo</h3>
+        <p>O Django é baseado no conceito de aplicativos. Cada funcionalidade ou parte do seu site é dividida em aplicativos. O comando abaixo cria um novo aplicativo chamado "meu_app".</p>
+        <pre>python manage.py startapp meu_app</pre>
+
+        <h3>12. Adicionar o Aplicativo ao `settings.py`</h3>
+        <p>Agora, você precisa adicionar seu aplicativo ao arquivo de configurações do projeto (<code>settings.py</code>) para que ele seja reconhecido pelo Django.</p>
+        <pre>
+            INSTALLED_APPS = [
+                'django.contrib.admin',
+                'django.contrib.auth',
+                'django.contrib.contenttypes',
+                'django.contrib.sessions',
+                'django.contrib.messages',
+                'django.contrib.staticfiles',
+                'meu_app',
+            ]
+        </pre>
+
+        <h3>13. Configurar URLs do Aplicativo</h3>
+        <p>Você precisa mapear as URLs do seu aplicativo para as views (funções que retornam respostas para as requisições HTTP). Isso é feito no arquivo <code>urls.py</code> do projeto.</p>
+        <pre>
+            from meu_app import views
+            urlpatterns = [
+                path('', views.index, name='index'),
+            ]
+        </pre>
+
+        <h3>14. Criar Função de Visualização</h3>
+        <p>Em seguida, crie uma função em <code>views.py</code> que será responsável por retornar uma resposta para o navegador (ex: renderizar um template HTML).</p>
+        <pre>
+            from django.shortcuts import render
+            def index(request):
+                return render(request, 'index.html')
+        </pre>
+
+        <h3>15. Instalar o `mysqlclient`</h3>
+        <p>Se você optou por usar o MySQL como banco de dados, você precisará instalar o <strong>mysqlclient</strong>, um conector para o MySQL que permite a integração do Django com esse banco.</p>
+        <pre>pip install mysqlclient</pre>
+
+        <h3>16. Realizar Migração para MySQL</h3>
+        <p>Após configurar o banco de dados, execute a migração para aplicar as configurações e criar as tabelas necessárias no banco de dados.</p>
+        <pre>python manage.py migrate</pre>
+
+        <h3>17. Criar Superusuário</h3>
+        <p>Crie um superusuário para poder acessar o painel de administração do Django e gerenciar o conteúdo do seu site.</p>
+        <pre>python manage.py createsuperuser</pre>
+
+        <h3>18. Configurar Banco de Dados no `settings.py`</h3>
+        <p>No arquivo <code>settings.py</code>, configure as informações do seu banco de dados, como nome, usuário, senha, e o tipo de banco (MySQL, no caso).</p>
+        <pre>
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.mysql',
+                    'NAME': 'aula06', 
+                    'USER': 'root',  
+                    'PASSWORD': '',  
+                    'HOST': '127.0.0.1', 
+                    'PORT': '3306', 
+                    'OPTIONS': {
+                        'autocommit': True,
+                    }
+                }
+            }
+        </pre>
+
+        <h3>19. Iniciar o Servidor de Desenvolvimento</h3>
+        <p>Finalmente, inicie o servidor de desenvolvimento para ver sua aplicação funcionando localmente. Acesse <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a> no navegador.</p>
+        <pre>python manage.py runserver</pre>
+    </div>
+</body>
+{% endblock %}

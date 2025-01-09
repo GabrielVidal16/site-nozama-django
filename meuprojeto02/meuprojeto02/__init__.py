@@ -1,0 +1,1 @@
+# Este é um arquivo fundamental em qualquer pacote Python, inclusive em um projeto Django. Ele serve para indicar ao Python que o diretório em questão deve ser tratado como um pacote. Ou seja, ele torna o diretório acessível como um módulo Python, permitindo a importação de outros arquivos dentro dele.

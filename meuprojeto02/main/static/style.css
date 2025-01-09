@@ -1,0 +1,359 @@
+
+.titulo-principal {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+html, body {
+    margin: 0;
+    padding: 0; 
+    font-family: sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #0000a4;
+    padding: 0.8rem 0;
+    margin-bottom: 0px;
+    margin-top: 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.navbar-brand {
+    color: #fff;
+    font-size: 15px;
+    text-decoration: none;
+    margin-left: 0.3cm;
+    font-family: Segoe UI;
+    
+}
+.navbar-brand1 {
+    color: #fff; 
+    font-size: 13px;
+    text-decoration: none;
+    margin-left: 0.3cm;
+    font-family: Segoe UI; 
+    
+    
+}
+.navbar-brand2 {
+    color: #ccc;
+    font-size: 13px; 
+    text-decoration: none;
+    margin-left: 0.3cm;
+    font-family: Segoe UI;
+    transition: color 0.3s
+    
+}
+.navbar-brand2:hover {
+    color: #fff; 
+}
+
+
+.navbar-toggler {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.mensagem-erro {
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+
+.navbar-collapse {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.navbar-nav {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.navbar-nav .nav-link {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 13px;
+    margin-right: 0.2cm;
+    font-family: Segoe UI; 
+    transition: color 0.3s
+}
+.navbar .nav-link:hover {
+    color: #fff; 
+}
+
+.navbar-nav .nav-link1 {
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    margin-left: 0.2cm;
+    font-family: Segoe UI;
+    
+}
+
+
+
+
+
+h2{
+    margin-top: 0px;
+}
+.divimg{
+    text-align: center;
+  }
+
+  
+.imgpython{
+    width: 100px;
+    height: 150px;
+  }
+  .imgdjango{
+    width: 100px;
+    height: 100px; 
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-right: 1px solid #ddd;
+  }
+  
+  th {
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  td {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: #eee;
+  }
+ 
+button {
+  
+  border-radius: 5px;
+  
+  padding: 10px 20px;
+ 
+  font-size: 16px;
+  
+  font-family: sans-serif;
+}
+
+
+button.editar {
+  
+  background-color: green;
+ 
+  color: white;
+}
+button.finalizado {
+ 
+  background-color: gray;
+  
+  color: white;
+}
+
+button.excluir {
+  
+  background-color: red;
+ 
+  color: white;
+}
+
+
+.botaologin {
+ 
+  width: 200px;
+  
+  height: 40px;
+  
+  background-color: #0000a4;
+ 
+  color: white;
+ 
+  cursor: pointer;
+  border-color: yellow;
+  transition: background-color 0.3s ease;
+}
+.botaologin:hover { 
+  background-color: #0056b3; 
+}
+
+
+.botao {
+  width: 188px; 
+  height: 30px; 
+  background-color: #0000a4;
+  color: white;
+  border-color: yellow;
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  padding: 3px 5px; 
+  border: 2px solid yellow;
+  border-radius: 3px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 18px; 
+}
+
+.botao:hover {
+  background-color: #0056b3;
+}
+.input-select {
+  border-color: yellow;  /* Cor da borda */
+  border-radius: 5px;     /* Bordas arredondadas */
+  padding: 10px 20px;     /* Preenchimento interno do campo */
+  width: 160px;           /* Largura do campo */
+  height: 20px;           /* Altura do campo */
+}
+/* Estilo para os botões de rádio */
+input[type="radio"] {
+  margin-right: 8px;
+  accent-color: #007bff; /* Cor personalizada do círculo */
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Estilo para as labels */
+label {
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Estilo para o hover nas labels */
+label:hover {
+  color: #007bff;
+}
+/* .inputlogin {
+ 
+  border-color: yellow;
+ 
+  border-radius: 5px;
+  
+  padding: 10px 20px;
+  
+  width: 160px;
+  
+  height: 20px;
+} */
+/* Estilo para os campos de input */
+.inputlogin {
+  width: 100px;         /* Largura reduzida */
+  height: 20px;         /* Altura reduzida */
+  padding: 10px 20px;   /* Preenchimento interno */
+  font-size: 14px;      /* Tamanho da fonte reduzido */
+  border: 1px solid yellow; /* Cor da borda */
+  border-radius: 5px;   /* Bordas arredondadas */
+}
+
+/* Estilo do input quando em foco */
+.inputlogin:focus {
+  border-color: #007bff; /* Cor da borda quando em foco */
+  outline: none;         /* Remove o contorno padrão */
+}
+
+.excluir {
+  
+  display: inline-block;
+  
+  padding: 10px 20px;
+  
+  border: 1px solid black;
+ 
+  background-color: red;
+  
+  color: white;
+  
+  text-decoration: none;
+}
+
+
+.editar {
+  
+  display: inline-block;
+ 
+  padding: 10px 20px;
+  
+  border: 1px solid black;
+  
+  background-color: green;
+  
+  color: white;
+ 
+  text-decoration: none;
+}
+
+.relatorio {
+ 
+  display: inline-block;
+ 
+  padding: 10px 20px;
+ 
+  border: 1px solid black;
+ 
+  background-color: rgb(0, 119, 128);
+ 
+  color: white;
+  
+  text-decoration: none;
+}
+
+.Finalizado {
+ 
+  display: inline-block;
+ 
+  padding: 10px 20px;
+ 
+  border: 1px solid black;
+  
+  background-color: grey;
+ 
+  color: white;
+  
+  text-decoration: none;
+}
+.msg-alertas{ 
+  width:100%; 
+  overflow:hidden; 
+  margin:0 auto; 
+  padding:10px; 
+  background-color:#FFFFFF; 
+} 
+.ms{ 
+ width:100%; 
+ margin:auto;  
+ padding:1em; 
+ float:left; 
+ display:block; 
+ margin-bottom:10px;
+ font-family:Verdana, Arial, Helvetica, sans-serif; 
+ font-weight:100; 
+ font-size:16px;
+}
+
+.erro   { background-color:#FFCACA; border:2px #a60202 solid; color:#a60202; border-radius:5px; }
+.ok     { background-color:#A6FFBC; border:2px #00bd00 solid; color:#00bd00; border-radius:5px; }
+.alerta { background-color:#FFFFBF; border:2px #2b2b2b solid; color:#2b2b2b; border-radius:5px; }
+.info   { background-color:#B3E7FF; border:2px #018ace solid; color:#018ace; border-radius:5px; }
