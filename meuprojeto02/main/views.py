@@ -113,7 +113,7 @@ def paginainicial(request):
             cursor = bd.cursor()
             
             # Execute a consulta para buscar o nome do usuário
-            cursor.execute('SELECT nome FROM usuarios WHERE id = %s;', (usuario_id,))
+            cursor.execute('SELECT nome FROM usuarios WHERE usuario_id = %s;', (usuario_id,))
             usuario = cursor.fetchone()
             
             cursor.close()
