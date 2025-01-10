@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect  # Usado para redirecionar o usuário para uma nova URL
-from django.shortcuts import render, redirect  # 'render' para renderizar templates e 'redirect' para redirecionar o usuário
+from django.shortcuts import render, redirect
+import mysql  # 'render' para renderizar templates e 'redirect' para redirecionar o usuário
 from main.bd_config import conecta_no_banco_de_dados  # Função personalizada para conectar-se ao banco de dados
 from .forms import ContatoForm, LoginForm  # Importa o formulário personalizado 'ContatoForm' para manipulação de dados do usuário
 from django.shortcuts import render  # Usado para renderizar templates HTML com dados contextuais
@@ -45,7 +46,7 @@ def login(request):
             # Se o usuário for encontrado
             if usuario:
                 request.session['usuario_id'] = usuario[0]  # Salva o ID do usuário na sessão
-                return redirect('paginainicial')  # Redireciona para a página inicial
+                return redirect('home')  # Redireciona para a página inicial
 
             else:
                 # Se não encontrar o usuário, exibe uma mensagem de erro
@@ -126,6 +127,60 @@ def paginainicial(request):
 
             # Passe o nome do usuário para o template
             return render(request, 'paginainicial.html', {'nome_usuario': nome_usuario})
+        
+def home(request):
+    products = []
+
+    try:
+        # Conectando ao banco de dados
+        con = conecta_no_banco_de_dados()
+        cursor = con.cursor(dictionary=True)  # Use dictionary=True para retornar resultados como dicionários
+        cursor.execute('SELECT * FROM produtos')
+        products = cursor.fetchall()  # Use fetchall() para obter todos os registros
+        print(products)
+
+    except mysql.connector.Error as error:
+        print(f"Falha ao executar a consulta: {error}")
+        return "Ocorreu um erro ao buscar os dados.", 500
+
+    finally:
+        if cursor:  # Verifica se o cursor foi inicializado
+            cursor.close()
+        if con and con.is_connected():  # Verifica se a conexão foi estabelecida e está aberta
+            con.close()
+
+        return render(request,'home.html', {'produtos': products})
+
+def adicionar_ao_carrinho(request, produto_id):
+    itens = {}
+    # Lista de produtos disponíveis
+    produtos = [
+        {"produto_id": 1, "nome": "Elefante Psíquico de Guerra Pré-Histórico", "preco": 100.00, "imagem": "produto_1.jpeg"},
+        {"produto_id": 2, "nome": "Lâmina do Caos", "preco": 150.00, "imagem": "produto_2.jpeg"},
+        {"produto_id": 3, "nome": "Livro Misterioso", "preco": 200.00, "imagem": "produto_3.jpg"},
+    ]
+
+    # Encontrar o produto com o ID correspondente
+    produto = next((p for p in produtos if p["id"] == produto_id), None)
+
+    if produto:
+        # Se o produto já está no carrinho, incrementa a quantidade
+        if produto_id in itens:
+            itens[produto_id]["quantidade"] += 1
+        else:
+            # Adiciona o produto ao carrinho com quantidade inicial de 1
+            itens[produto_id] = {
+                "id": produto["id"],
+                "nome": produto["nome"],
+                "preco": produto["preco"],
+                "quantidade": 1,
+            }
+
+
+
+    return render(request, 'home.html')
+
+
 def contatos(request):
      if not request.session.get('usuario_id'):
             return redirect('/')

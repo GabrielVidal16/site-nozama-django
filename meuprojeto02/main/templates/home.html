@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja Online</title>
+    <link rel="stylesheet" href="{% static 'styles_home.css' %}">
+</head>
+<body>
+    <header>
+        <div class="nome-site">NOZAMA</div>
+        <div class="buttons">
+            {% if not logged_in %}
+                <button onclick="window.location.href='/registro'">Registrar</button>
+                <button onclick="window.location.href='/login'">Logar</button>
+            {% elif logged_in %}
+                <button onclick="window.location.href='/logout'">Logout</button>
+            {% endif %}
+            <button onclick="window.location.href='/carrinho'">Carrinho</button>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <h1>Bem-vindo ao site!</h1>
+
+        <div class="product-grid">
+            {% for produto in produtos %}
+            <div class="product-card">
+                <img src="{% static 'images/' %}{{ produto.imagem }}" alt="{{ produto.nome }}">
+                <h3>{{ produto.nome }}</h3>
+                <p>R$ {{ produto.preco }}</p>
+                <form action="{% url 'adicionar_ao_carrinho' produto_id=produto.id %}" method="POST" onsubmit="desativarBotao(this)">
+                    {% csrf_token %}
+                    <button id="adicionarCarrinho" type="submit">Adicionar ao Carrinho</button>
+                </form>
+
+                <script>
+                    function desativarBotao(form) {
+                        var botao = form.querySelector("button");
+                        botao.disabled = true;  // Desativa o botão após o clique
+                        botao.innerText = "Adicionado ao Carrinho";  // Muda o texto do botão
+                    }
+                </script>
+
+                <form action="{% url 'carrinho_bp.comprar_produto' produto_id=produto.id %}" method="POST">
+                    <button type="submit">Comprar Agora</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

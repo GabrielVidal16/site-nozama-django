@@ -25,6 +25,8 @@ urlpatterns = [
     path('guia', views.index, name='index'),
     path('sobre',views.sobre,name='sobre'),
      path('contato/', views.contato, name='contato'),
+     path('', views.home, name='home'),
+      path('adicionar_ao_carrinho/<int:produto_id>/', views.adicionar_ao_carrinho, name='adicionar_ao_carrinho'),
     
      
      path('cadastro/', views.cadastro, name='cadastro'),
@@ -34,7 +36,7 @@ urlpatterns = [
       
       path('contatos/', views.contatos, name='contatos'),
       path('usuarios/', views.usuarios, name='usuarios'),
-      path('', views.login, name='login'),
+      path('login', views.login, name='login'),
       path('admin/', admin.site.urls),
       path('paginainicial', views.paginainicial, name='paginainicial'),
         path('accounts/', include('django.contrib.auth.urls')),

@@ -1,0 +1,116 @@
+body {
+    background-color: rgba(255, 255, 255, 0.849);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #000000;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;  /* Centraliza os itens no header */
+    align-items: center;
+    position: relative;  /* Permite posicionamento absoluto dos elementos filhos */
+}
+
+.nome-site {
+    font-size: 4.5em;  /* Tamanho da fonte do nome do site */
+    color: rgb(255, 255, 255);  /* Cor do texto */
+    font-weight: bold;  /* Deixa o texto em negrito */
+    text-align: center;  /* Centraliza o texto */
+    flex: 1;  /* Faz o nome do site ocupar o espaço disponível */
+}
+
+.welcome {
+    position: absolute;  /* Posicionamento absoluto */
+    left: 130px;  /* Alinha à esquerda */
+    top: 10px;  /* Alinha no topo */
+    font-weight: bold; /* Deixa o texto em negrito */
+    font-size: 3em;
+    white-space: nowrap; /* Evita que o texto quebre em várias linhas */
+    overflow: hidden; /* Oculta o conteúdo que ultrapassar o limite da tela */
+    text-overflow: ellipsis; /* Adiciona "..." se o conteúdo for grande demais */
+    max-width: 100%; /* Garante que o texto não ultrapasse o limite */
+    margin: 0; /* Remove margens indesejadas */
+    padding: 5px 10px; /* Ajusta o padding para dar espaço ao redor do texto */
+    color: rgba(4, 255, 213, 0.651); /* Cor do texto */
+    border-radius: 5px; /* Bordas arredondadas */
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    position: absolute;  /* Permite posicionamento absoluto */
+    right: 20px;  /* Posiciona os botões à direita */
+    top: 10px;  /* Alinha no topo */
+}
+
+.buttons button {
+    background-color: #9370DB;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: #532553;
+}
+
+.main-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 2.3em;
+    margin-bottom: 10px;
+    color: #ffffff;  /* Cor do texto */
+    background-color: #000000e8;  /* Cor de fundo preta (faixa atrás do texto) */
+    padding: 10px;  /* Espaçamento entre a borda e o texto */
+    border: 1px solid #000000;  /* Borda vermelha ao redor da faixa */
+    border-radius: 13px;  /* Borda arredondada, se preferir */
+}
+
+.main-content p {
+    font-size: 2.4em;
+    margin-bottom: 40px;
+    color: #be1a95;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+}
+
+.product-card {
+    border: 3px solid;
+    padding: 15px;
+    text-align: center;
+    background-color: #ffffff;
+    width: 90%;  /* Faz com que a largura da imagem ocupe toda a largura do cartão */
+}
+
+.product-card img {
+    width: 80%;  /* Faz com que a largura da imagem ocupe toda a largura do cartão */
+    height: 270px; /* Define uma altura fixa para todas as imagens */
+    object-fit: cover;  /* Garante que a imagem cubra toda a área sem distorcer */
+    border-radius: 10px; /* Opcional: adiciona bordas arredondadas à imagem */
+}
+
+.product-card h3 {
+    font-size: 1.4em;
+    margin: 10px 0;
+    color: rgb(0, 0, 0);
+}
+
+.product-card p {
+    color: #1179e7;
+    font-size: 1.4em;
+    font-weight: bold;
+}
