@@ -169,8 +169,9 @@ def carrinho(request):
     
     # Formata o total geral
     total_carrinho_formatado = f"{total_carrinho:.2f}"
+    contexto = {"itens": itens_renderizados, "total_carrinho": total_carrinho_formatado}
     
-    return render(request,'carrinho_de_compras.html', {"itens" : itens_renderizados},{"total_carrinho" : total_carrinho_formatado})
+    return render(request, 'carrinho_de_compras.html', contexto)
     
 
 def adicionar_ao_carrinho(request,produto_id):
