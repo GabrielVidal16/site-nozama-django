@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras</title>
+    <link rel="stylesheet" href="../static/styles_carrinho.css">
+</head>
+<body>
+    <header class="header">
+        <div class="nome-site">NZ</div>
+        <div class="buttons">
+            {% if not logged_in %}
+                <button onclick="window.location.href='/registro'">Registrar</button>
+                <button onclick="window.location.href='/login'">Logar</button>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="main-content">
+        <h1>Carrinho de Compras</h1>
+
+       {% if itens %}
+        <div class="cart-items">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Preço</th>
+                        <th>Quantidade</th>
+                        <th>Total</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in itens %}
+                    <tr>
+                        <td>{{ item.nome }}</td>
+                        <td>R$ {{ item.preco }}</td>
+                        <td>R$ {{ item }}</td>
+                        <td>{{ item.quantidade }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="total">
+                <p><strong>Total:</strong> R$ {{ total_carrinho }}</p>
+            </div>
+
+            <div class="actions">
+                <button onclick="window.location.href='/home'">Continuar Comprando</button>
+            </div>
+
+        </div>
+        {% else %}
+        <p>Seu carrinho está vazio.</p>
+        {% endif %}
+    </div> 
+
+</body>
+</html>

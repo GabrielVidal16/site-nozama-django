@@ -17,7 +17,10 @@
             {% elif logged_in %}
                 <button onclick="window.location.href='/logout'">Logout</button>
             {% endif %}
-            <button onclick="window.location.href='/carrinho'">Carrinho</button>
+            {% comment %} <button onclick="window.location.href='/carrinho'">Carrinho</button> {% endcomment %}
+            <button onclick="window.location.href='/carrinho'" class="button">Carrinho</button>
+
+            
         </div>
     </header>
 
@@ -30,10 +33,15 @@
                 <img src="{% static 'images/' %}{{ produto.imagem }}" alt="{{ produto.nome }}">
                 <h3>{{ produto.nome }}</h3>
                 <p>R$ {{ produto.preco }}</p>
-                <form action="{% url 'adicionar_ao_carrinho' produto_id=produto.id %}" method="POST" onsubmit="desativarBotao(this)">
-                    {% csrf_token %}
+                <form method="POST" action="/adicionar_ao_carrinho/{{ produto.produto_id }}">
+                    {% csrf_token %}  <!-- Adiciona o token CSRF aqui -->
                     <button id="adicionarCarrinho" type="submit">Adicionar ao Carrinho</button>
                 </form>
+                
+                {% comment %} <form action="{% url 'adicionar_ao_carrinho' produto_id=produto.id %}" method="POST" onsubmit="desativarBotao(this)">
+                    {% csrf_token %}
+                    <button id="adicionarCarrinho" type="submit">Adicionar ao Carrinho</button>
+                </form> {% endcomment %}
 
                 <script>
                     function desativarBotao(form) {
@@ -43,9 +51,9 @@
                     }
                 </script>
 
-                <form action="{% url 'carrinho_bp.comprar_produto' produto_id=produto.id %}" method="POST">
+                {% comment %} <form action="{% url 'carrinho_bp.comprar_produto' produto_id=produto.id %}" method="POST">
                     <button type="submit">Comprar Agora</button>
-                </form>
+                </form> {% endcomment %}
             </div>
             {% endfor %}
         </div>

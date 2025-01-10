@@ -15,6 +15,7 @@ from django.http import HttpResponseBadRequest  # Retorna uma resposta HTTP com 
 from django.db import transaction  # Usado para controlar transações de banco de dados (commit/rollback)
 from django.http import HttpResponse, JsonResponse  # 'HttpResponse' para resposta genérica e 'JsonResponse' para respostas JSON
 from django.contrib import messages  # Usado para mostrar mensagens de feedback ao usuário, como sucesso ou erro
+itens = {}
 
 def login(request):
     request.session['usuario_id'] = ""
@@ -137,7 +138,7 @@ def home(request):
         cursor = con.cursor(dictionary=True)  # Use dictionary=True para retornar resultados como dicionários
         cursor.execute('SELECT * FROM produtos')
         products = cursor.fetchall()  # Use fetchall() para obter todos os registros
-        print(products)
+        print(f"estes sao os produtos{products}")
 
     except mysql.connector.Error as error:
         print(f"Falha ao executar a consulta: {error}")
@@ -148,20 +149,42 @@ def home(request):
             cursor.close()
         if con and con.is_connected():  # Verifica se a conexão foi estabelecida e está aberta
             con.close()
+    
 
         return render(request,'home.html', {'produtos': products})
 
-def adicionar_ao_carrinho(request, produto_id):
-    itens = {}
+
+def carrinho(request):
+    total_carrinho = sum(item["preco"] * item["quantidade"] for item in itens.values())
+    
+    # Prepara os dados para renderizar no template
+    itens_renderizados = [
+        {
+            "nome": item["nome"],
+            "preco": f"{item['preco']:.2f}",  # Formata o preço unitário
+            "quantidade": item["quantidade"],
+            "total": f"{item['preco'] * item['quantidade']:.2f}"  # Formata o total por produto
+        } for item in itens.values()
+    ]
+    
+    # Formata o total geral
+    total_carrinho_formatado = f"{total_carrinho:.2f}"
+    
+    return render(request,'carrinho_de_compras.html', {"itens" : itens_renderizados},{"total_carrinho" : total_carrinho_formatado})
+    
+
+def adicionar_ao_carrinho(request,produto_id):
+    
+    
     # Lista de produtos disponíveis
     produtos = [
-        {"produto_id": 1, "nome": "Elefante Psíquico de Guerra Pré-Histórico", "preco": 100.00, "imagem": "produto_1.jpeg"},
-        {"produto_id": 2, "nome": "Lâmina do Caos", "preco": 150.00, "imagem": "produto_2.jpeg"},
-        {"produto_id": 3, "nome": "Livro Misterioso", "preco": 200.00, "imagem": "produto_3.jpg"},
+        {"produto_id": 1, "nome": "Elefante Psíquico de Guerra Pré-Histórico", "preco": 100.00, "imagem": "produto 1.jpeg"},
+        {"produto_id": 2, "nome": "Lâmina do Caos", "preco": 150.00, "imagem": "produto 2.jpeg"},
+        {"produto_id": 3, "nome": "Livro Misterioso", "preco": 200.00, "imagem": "produto 3.jpg"},
     ]
 
     # Encontrar o produto com o ID correspondente
-    produto = next((p for p in produtos if p["id"] == produto_id), None)
+    produto = next((p for p in produtos if p["produto_id"] == produto_id), None)
 
     if produto:
         # Se o produto já está no carrinho, incrementa a quantidade
@@ -170,15 +193,16 @@ def adicionar_ao_carrinho(request, produto_id):
         else:
             # Adiciona o produto ao carrinho com quantidade inicial de 1
             itens[produto_id] = {
-                "id": produto["id"],
+                "produto_id": produto["produto_id"],
                 "nome": produto["nome"],
                 "preco": produto["preco"],
                 "quantidade": 1,
             }
+    
+    
+    return HttpResponse(status=204)
 
-
-
-    return render(request, 'home.html')
+    
 
 
 def contatos(request):
