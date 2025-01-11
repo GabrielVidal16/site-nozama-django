@@ -22,26 +22,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
    #rota, view responsavel nome de referencia
-    path('guia', views.index, name='index'),
-    path('sobre',views.sobre,name='sobre'),
-     path('contato/', views.contato, name='contato'),
      path('', views.home, name='home'),
       path('carrinho',views.carrinho, name = 'carrinho'),
        path('adicionar_ao_carrinho/<int:produto_id>',views.adicionar_ao_carrinho, name='adicionar_ao_carrinho'),
     
      path('registro/', views.registro, name='registro'),
-     path('cadastro/', views.cadastro, name='cadastro'),
-     path('editarusuario/<int:id>', views.editarusuario, name='editarusuario'),
-     path('excluirususario/<int:id>/', views.excluirususario, name='excluirususario'),
+     path('editarproduto/<int:id>', views.editarproduto, name='editarproduto'),
+     path('excluirproduto/<int:id>/', views.excluirproduto, name='excluirproduto'),
       
-      
-      path('contatos/', views.contatos, name='contatos'),
-      path('usuarios/', views.usuarios, name='usuarios'),
+      path('produtos/', views.produtos, name='produtos'),
       path('login', views.login, name='login'),
       path('logout',views.logout_view,name = 'logout_view'),
       path('admin/', admin.site.urls),
-      path('paginainicial', views.paginainicial, name='paginainicial'),
-      path('atendimento/<int:id>/',views.atenderchamado, name='atendimento_detail'),
+      
       
  ]
 if settings.DEBUG:

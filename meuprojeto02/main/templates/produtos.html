@@ -1,0 +1,59 @@
+{% extends "template.html" %}
+{%block titulo%}
+produto
+{%endblock%}
+{% block conteudo%}
+{% load static %}
+    <h2 style="text-align: center; font-size: 25px; font-family: Segoe UI;">produto</h2>
+    <style>
+        body {
+            background-color: rgb(255, 255, 255);
+        }
+
+
+        .faixa {
+            background-color: #000000cc;
+            height: 200px;
+            width: 100%;
+            text-align: center;
+            line-height: 200px;
+            color: #ffffffb4;
+            font-size: 150px;
+            font-family: sans-serif;
+            z-index: 2;
+            position: fixed;  /* Alterado para fixed */
+            bottom: 0;  /* Posiciona na parte inferior da página */
+            border: 5px solid #000000;
+        }
+
+
+    </style>
+
+    <table>
+      <thead>
+          <tr>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>Ações</th>
+          </tr>
+      </thead>
+
+      <tbody>
+          {% for produto in produtos %}
+              <tr>
+                  <td>{{ produto.1 }}</td>
+                  <td>{{ produto.2 }}</td>
+                  <td>
+                    <a href="/excluirproduto/{{ produto.0}}" class="excluir">Excluir</a>
+                    <a href="/editarproduto/{{ produto.0}}" class="editar">Editar</a>
+                  
+                </td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+    
+    <div class="faixa">NOZAMA</div>
+    
+            
+{%endblock%}

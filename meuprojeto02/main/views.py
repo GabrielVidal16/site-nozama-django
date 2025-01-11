@@ -82,7 +82,7 @@ def registro(request):
             bd = conecta_no_banco_de_dados()
             cursor = bd.cursor()
 
-            sql = '''INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)'''
+            sql = '''INSERT INTO usuarios (nome, email, senha, perfil) VALUES (%s, %s, %s,"usuario")'''
 
             # Executar o comando com os valores
             cursor.execute(sql, (nome, email, senha))
@@ -97,33 +97,6 @@ def registro(request):
         form = CadastroForm()
 
     return render(request, 'cadastro_usuario.html', {'form': form})
-
-def paginainicial(request):
-        if not request.session.get('usuario_id'):
-            return redirect('/')
-        else:
-
-            # Obtenha o ID do usuário armazenado na sessão
-            usuario_id = request.session['usuario_id']
-
-            # Conecte-se ao banco de dados e recupere o nome do usuário
-            bd = conecta_no_banco_de_dados()
-            cursor = bd.cursor()
-            
-            # Execute a consulta para buscar o nome do usuário
-            cursor.execute('SELECT nome FROM usuarios WHERE usuario_id = %s;', (usuario_id,))
-            usuario = cursor.fetchone()
-            
-            cursor.close()
-            bd.close()
-
-            if usuario:
-                nome_usuario = usuario[0]  # Assumindo que "nome" está na primeira posição
-            else:
-                nome_usuario = 'Usuário não encontrado'
-
-            # Passe o nome do usuário para o template
-            return render(request, 'paginainicial.html', {'nome_usuario': nome_usuario})
         
 def home(request):
     products = []
@@ -131,14 +104,13 @@ def home(request):
         return redirect('/login')
     
     usuario_id = request.session['usuario_id']
-    print(usuario_id)
 
     # Conecte-se ao banco de dados e recupere o nome do usuário
     bd = conecta_no_banco_de_dados()
     cursor = bd.cursor()
     
     # Execute a consulta para buscar o nome do usuário
-    cursor.execute('SELECT nome FROM usuarios WHERE usuario_id = %s;', (usuario_id,))
+    cursor.execute('SELECT nome, perfil FROM usuarios WHERE usuario_id = %s;', (usuario_id,))
     usuario = cursor.fetchone()
     
     cursor.close()
@@ -146,6 +118,9 @@ def home(request):
 
     if usuario:
         nome_usuario = usuario[0]  # Assumindo que "nome" está na primeira posição
+        perfil = usuario[1]
+        print(perfil)
+
     else:
         nome_usuario = 'Usuário não encontrado'
 
@@ -155,7 +130,6 @@ def home(request):
         cursor = con.cursor(dictionary=True)  # Use dictionary=True para retornar resultados como dicionários
         cursor.execute('SELECT * FROM produtos')
         products = cursor.fetchall()  # Use fetchall() para obter todos os registros
-        print(f"estes sao os produtos{products}")
 
     except mysql.connector.Error as error:
         print(f"Falha ao executar a consulta: {error}")
@@ -168,7 +142,7 @@ def home(request):
             con.close()
     
 
-    return render(request, 'home.html', {'produtos': products, 'nome_usuario': nome_usuario})
+    return render(request, 'home.html', {'produtos': products, 'nome_usuario': nome_usuario, "perfil" : perfil})
 
 
 def carrinho(request):
@@ -222,71 +196,63 @@ def adicionar_ao_carrinho(request,produto_id):
 
     
 
-
-def contatos(request):
-     if not request.session.get('usuario_id'):
-            return redirect('/')
-     else:
+def editarproduto(request,id):
+    if not request.session.get('usuario_id'):
+        return redirect('/login')
+    else:
+        produto_id = id
         bd = conecta_no_banco_de_dados()
         cursor = bd.cursor()
-        cursor.execute('SELECT * FROM contatos where situacao!="Atendimento" AND situacao!="Finalizado";')
-        contatos = cursor.fetchall()
-        
-        # Renderize o template HTML com os contatos recuperados
-        return render(request, 'contatos.html', {"contatos": contatos})
-def usuarios(request):
+        cursor.execute("""
+            SELECT produto_id, nome, preco
+            FROM produtos
+            WHERE produto_id = %s;
+        """, (id,))
+        dados_produto = cursor.fetchone()
+        cursor.close()
+        bd.close()
+        if request.method == 'POST':
+            nome = request.POST.get('nome')
+            preco = request.POST.get('preco')    
+            if not all([nome, preco]):
+                return render(request, 'produtos.html')
+            bd = conecta_no_banco_de_dados()
+            cursor = bd.cursor()
+            sql = (
+                """
+                UPDATE produtos
+                SET nome = %s, preco = %s
+                WHERE produto_id = %s;
+                """
+            )
+            values = (nome, preco,produto_id)
+            cursor.execute(sql, values)
+            bd.commit()  # Assumindo que você tenha gerenciamento de transações
+            cursor.close()
+            bd.close()
+
+            # Redirecione para a página de sucesso ou exiba a mensagem de confirmação
+            return redirect('home')     
+
+        # Exiba o formulário (assumindo lógica de renderização)
+        return render(request, 'editarproduto.html',{'id': produto_id})
+
+def produtos(request):
     if not request.session.get('usuario_id'):
             return redirect('/')
     else:
         bd = conecta_no_banco_de_dados()
         cursor = bd.cursor()
-        cursor.execute('SELECT * FROM usuarios;')
-        usuarios = cursor.fetchall()
+        cursor.execute('SELECT * FROM produtos;')
+        produtos = cursor.fetchall()
         
         # Renderize o template HTML com os contatos recuperados
-        return render(request, 'usuarios.html', {"usuarios": usuarios})
-def atenderchamado(request, id):
-     if not request.session.get('usuario_id'):
-            return redirect('/')
-     else:
-        usuario_id = request.session['usuario_id']
+        return render(request, 'produtos.html', {"produtos": produtos})
 
-        try:
-            # Connect to the database
-            bd = conecta_no_banco_de_dados()
-            cursor =  bd.cursor()
-
-            # Update contato's status
-            sql = 'UPDATE contatos SET situacao = %s WHERE id_contato = %s;'
-            values = ("Atendimento", int(id))
-            cursor.execute(sql, values)
-
-            # Insert record into usuario_contato table
-            sql = """
-                INSERT INTO usuario_contato (usuario_id, contato_id, situacao)
-                VALUES (%s, %s, %s);
-            """
-            values = (int(usuario_id), int(id), "Atendimento")
-            cursor.execute(sql, values)
-
-            # Commit changes and close connection
-            bd.commit()
-            bd.close()
-
-            # Successful update
-            return redirect('/paginainicial')
-
-        except Exception as e:
-            # Handle errors
-            print(f"Erro ao atender chamado: {e}")
-            return redirect('/contatos')  
-
-
-
-
-def excluirususario(request,id):
+def excluirproduto(request,id):
+    produto_id = id
     if not request.session.get('usuario_id'):
-            return redirect('/')
+            return redirect('/login')
     else:
         try:
             # Estabelecer conexão com o banco de dados (substitua 'seu_banco_de_dados' pelo nome real)
@@ -294,154 +260,22 @@ def excluirususario(request,id):
             cursor = bd.cursor()
 
             # Evitar SQL injection usando parâmetros nomeados
-            sql = 'DELETE FROM usuarios WHERE id = %(user_id)s;'
-            params = {'user_id': id}
-
-            cursor.execute(sql, params)
+            sql = (
+                """
+                DELETE FROM produtos WHERE produto_id = %s;
+                """
+            )
+            values = (produto_id,)
+            cursor.execute(sql, values)
             bd.commit()
             cursor.close()
 
-            messages.success(request, 'Usuário excluído com sucesso!')
-            return redirect('paginainicial')
+            messages.success(request, 'produto excluído com sucesso!')
+            return redirect('produtos')
 
         except Exception as e:
             print(f"Erro ao excluir usuário: {e}")
-            messages.error(request, 'Falha ao excluir usuário. Tente novamente mais tarde.')
-            return redirect('pagina_inicial')
-def editarusuario(request,id):
-    if not request.session.get('usuario_id'):
-        return redirect('/')
-    else:
-        id_usuario = id
-        bd = conecta_no_banco_de_dados()
-        cursor = bd.cursor()
-        cursor.execute("""
-            SELECT id, nome, email
-            FROM usuarios
-            WHERE id = %s;
-        """, (id,))
-        dados_usuario = cursor.fetchone()
-        cursor.close()
-        bd.close()
-        if request.method == 'POST':
-            nome = request.POST.get('nome')
-            email = request.POST.get('email')
-            senha = request.POST.get('senha')    
-            if not all([nome, email, senha]):
-                return render(request, 'usuarios.html')
-            bd = conecta_no_banco_de_dados()
-            cursor = bd.cursor()
-            sql = (
-                """
-                UPDATE usuarios
-                SET nome = %s, email = %s, senha = %s
-                WHERE id = %s;
-                """
-            )
-            values = (nome, email, senha, id)
-            cursor.execute(sql, values)
-            bd.commit()  # Assumindo que você tenha gerenciamento de transações
-            cursor.close()
-            bd.close()
-
-            # Redirecione para a página de sucesso ou exiba a mensagem de confirmação
-            return redirect('paginainicial')     
-
-        # Exiba o formulário (assumindo lógica de renderização)
-        return render(request, 'editarusuario.html',{'id': id_usuario})
-def cadastro(request):
-    if not request.session.get('usuario_id'):
-        return redirect('/')
-    else:
-        if request.method == 'POST':
-            nome = request.POST.get('nome')
-            email = request.POST.get('email')
-            senha = request.POST.get('senha')
-            perfil = request.POST.get('perfil') 
-          
-      
-            # Valide a entrada (assumindo lógica de validação)
-            if not all([nome, email, senha,perfil]):
-                # Lide com erros de validação (por exemplo, exiba mensagens de erro)
-                return render(request, 'cadastro.html')
-
-            # Atualize os dados do usuário se a validação for aprovada
-            bd = conecta_no_banco_de_dados()
-            cursor = bd.cursor()
-            sql = (
-                """
-                INSERT INTO usuarios
-                SET nome = %s, email = %s, senha = %s, perfil=%s;
-                """
-            )
-            values = (nome, email, senha,perfil)
-            cursor.execute(sql, values)
-            bd.commit()  
-            cursor.close()
-            bd.close()
-
-            # Redirecione para a página de sucesso ou exiba a mensagem de confirmação
-            return redirect('paginainicial')     
-
-        # Exiba o formulário (assumindo lógica de renderização)
-        return render(request, 'cadastro.html')            
+            messages.error(request, 'Falha ao excluir produto. Tente novamente mais tarde.')
+            return redirect('produtos')
 
 
-
-
-
-
-def index(request):
-    if not request.session.get('usuario_id'):
-        return redirect('/')
-    else:
-        return render(request, 'Guia/index.html')
-def sobre(request):
-    if not request.session.get('usuario_id'):
-         return redirect('/')
-    else:
-        return render(request, 'Sobre/sobre.html')
-def contato(request):
-    if request.method == 'POST':
-        form = ContatoForm(request.POST)
-        if form.is_valid():
-            try:
-                # Estabelecer conexão com o banco de dados
-                bd = conecta_no_banco_de_dados()
-
-                # Preparar consulta SQL e valores
-                nome = form.cleaned_data['nome']
-                email = form.cleaned_data['email']
-                mensagem = form.cleaned_data['mensagem']
-                sql = "INSERT INTO contatos (nome, email, mensagem) VALUES (%s, %s, %s)"
-                values = (nome, email, mensagem)
-
-                # Executar consulta SQL e confirmar alterações
-                cursor = bd.cursor()
-                cursor.execute(sql, values)
-                bd.commit()
-
-                # Mensagem de sucesso e redirecionamento
-                print(f"Dados do formulário salvos com sucesso!")
-                return HttpResponseRedirect('/')
-
-            except Exception as err:
-                # Manipular erros de banco de dados
-                print(f"Erro ao salvar dados no banco de dados: {err}")
-                mensagem_erro = "Ocorreu um erro ao processar o seu contato. Tente novamente mais tarde."
-                return render(request, 'erro.html', mensagem_erro=mensagem_erro), 500
-
-            finally:
-                # Fechar conexão com o banco de dados se estiver aberta
-                if bd is not None:
-                    bd.close()
-
-        else:
-            # Manipular dados de formulário inválidos
-            return render(request, 'contato.html', {'form': form})
-
-    else:
-        # Renderizar formulário vazio
-        form = ContatoForm()
-        return render(request, 'contato.html', {'form': form})
-    

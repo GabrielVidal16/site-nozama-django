@@ -3,7 +3,7 @@
 {% block titulo %}
 
 
-Editar Usuário
+Editar Produto
 
 
 {% endblock %}
@@ -17,21 +17,16 @@ Editar Usuário
     
     <div>
       
-        <img class="imgpython"  src="{% static 'giphy.gif' %}" alt="">
                 <h1 style="text-align: center; font-size: 25px; font-family: Segoe UI;">
-            Por favor, edite os dados do usuário
+            Por favor, edite os dados do Produto
        
-                <form method="POST" action="/editarusuario/{{ id }}">
+                <form method="POST" action="/editarproduto/{{ id }}">
                     {% csrf_token %}  <div>
                 <input style="margin: 5px" class="inputlogin" type="text" name="nome" placeholder="Nome" >
+            <div>
+                <input style="margin: 5px" class="inputlogin" type="number" name="preco" placeholder="preco" step="0.01" min="0" >
             </div>
-                       <div>
-                <input style="margin: 5px"  class="inputlogin"type="email" name="email" placeholder="E-mail" >
-            </div>
-                       <div>
-                <input style="margin: 5px" class="inputlogin" type="password" name="senha" placeholder="Senha">
-            </div>
-        </div>
+    </div>
        
         
                     <br>

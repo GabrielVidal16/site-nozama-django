@@ -35,19 +35,34 @@ header {
     max-width: 100%; /* Garante que o texto não ultrapasse o limite */
     margin: 0; /* Remove margens indesejadas */
     padding: 5px 10px; /* Ajusta o padding para dar espaço ao redor do texto */
-    color: rgba(4, 255, 213, 0.651); /* Cor do texto */
+    color: rgb(0, 132, 255); /* Cor do texto */
     border-radius: 5px; /* Bordas arredondadas */
 }
 
-.buttons {
+.btn2 {
+    display: flex;
+    gap: 10px;
+    position: absolute;  /* Permite posicionamento absoluto */
+    right: 1500px;  /* Posiciona o botão à direita */
+    top: 25px;  /* Alinha no topo */ 
+    background-color: #28ce43;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn2:hover {
+    background-color: #3a5c2a;
+}
+
+.botao {
     display: flex;
     gap: 10px;
     position: absolute;  /* Permite posicionamento absoluto */
     right: 20px;  /* Posiciona os botões à direita */
     top: 10px;  /* Alinha no topo */
-}
-
-.buttons button {
     background-color: #9370DB;
     color: rgb(255, 255, 255);
     border: none;
@@ -56,7 +71,27 @@ header {
     cursor: pointer;
 }
 
-.buttons button:hover {
+
+.botao:hover {
+    background-color: #532553;
+}
+
+.botao2 {
+    display: flex;
+    gap: 10px;
+    position: absolute;  /* Permite posicionamento absoluto */
+    right: 120px;  /* Posiciona os botões à direita */
+    top: 10px;  /* Alinha no topo */
+    background-color: #9370DB;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.botao2:hover {
     background-color: #532553;
 }
 
