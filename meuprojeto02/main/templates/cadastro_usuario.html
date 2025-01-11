@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles_cadastro.css' %}">
+    <title>Site dos Guri!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body style="background-color: rgb(147, 26, 163);">
+    
+    <div class="faixa">NOZAMA</div>
+    <div class="linha-ondulada">
+        <svg viewBox="0 0 2870 150" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,150 Q300,100 600,50 T1200,50 T3000,30 V200 H0 Z"></path>
+        </svg>
+    </div>
+    
+    <div class="cadastro">Cadastro</div>
+    
+    <!-- Caixa de cadastro -->
+    <div class="caixa">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Cadastrar">
+        </form>
+        <a href="{% url 'login' %}">
+            <button type="button" class="btn">Já tem uma conta?</button>
+        </a>
+    </div> 
+
+</body>
+</html>

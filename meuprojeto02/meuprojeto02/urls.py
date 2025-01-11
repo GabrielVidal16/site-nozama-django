@@ -29,7 +29,7 @@ urlpatterns = [
       path('carrinho',views.carrinho, name = 'carrinho'),
        path('adicionar_ao_carrinho/<int:produto_id>',views.adicionar_ao_carrinho, name='adicionar_ao_carrinho'),
     
-     
+     path('registro/', views.registro, name='registro'),
      path('cadastro/', views.cadastro, name='cadastro'),
      path('editarusuario/<int:id>', views.editarusuario, name='editarusuario'),
      path('excluirususario/<int:id>/', views.excluirususario, name='excluirususario'),
@@ -38,9 +38,9 @@ urlpatterns = [
       path('contatos/', views.contatos, name='contatos'),
       path('usuarios/', views.usuarios, name='usuarios'),
       path('login', views.login, name='login'),
+      path('logout',views.logout_view,name = 'logout_view'),
       path('admin/', admin.site.urls),
       path('paginainicial', views.paginainicial, name='paginainicial'),
-        path('accounts/', include('django.contrib.auth.urls')),
       path('atendimento/<int:id>/',views.atenderchamado, name='atendimento_detail'),
       
  ]

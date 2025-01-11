@@ -1,0 +1,148 @@
+/* Reset básico */
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    background-color: rgb(255, 251, 251); /* Cor de fundo */
+    height: 100vh;
+    overflow: hidden; /* Impede que os elementos saiam da tela */
+    position: relative; /* Necessário para posicionar o pseudo-elemento corretamente */
+}
+
+
+
+/* Faixa de destaque */
+.faixa {
+    background-color: #ffffffcc;
+    height: 200px;
+    width: 100%;
+    text-align: center;
+    line-height: 200px;
+    color: #000000b4;
+    font-size: 150px;
+    font-family: sans-serif;
+    
+    z-index: 2;
+    position: relative;
+    border: 5px solid #000000;
+}
+
+/* Linha ondulada */
+.linha-ondulada {
+    width: 300%;
+    height: 100px; /* Ajuste a altura conforme necessário */
+    position: absolute;
+    bottom: 0; /* Fixa a linha ondulada na parte inferior da tela */
+    z-index: 1;
+}
+
+.linha-ondulada svg {
+    width: 100%;
+    height: 100%;
+}
+
+.linha-ondulada path {
+    fill:#ffffffcc;
+    stroke: #000000b4; /* Cor da onda */
+    stroke-width: 10;
+}
+
+/* Cadastro */
+.cadastro {
+    background-color: #13030fb9;
+    margin-top: 20px;
+    height: 100px;
+    width: 500px;
+    text-align: center;
+    line-height: 100px;
+    color: rgb(250, 0, 187);
+    font-size: 50px;
+    font-family: sans-serif;
+    border-radius: 78px;
+    z-index: 2;
+}
+
+/* Caixa de cadastro */
+.caixa {
+    width: 400px;
+    height: 500px;
+    background-color: #13030fb9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #e4dcdc;
+    font-size: 11px;
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 78px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+/* Estilo do formulário */
+form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilo dos inputs e botões */
+label {
+    margin-top: 15px;
+    font-size: 17px;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #850585;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #6a046a;
+}
+
+/* Estilo do botão */
+.btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    color: #fff;
+    background-color: #850585;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Efeito ao passar o mouse */
+.btn:hover {
+    background-color: #6a046a;
+}

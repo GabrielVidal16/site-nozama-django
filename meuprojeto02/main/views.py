@@ -3,8 +3,11 @@ from django.shortcuts import render, redirect
 import mysql  # 'render' para renderizar templates e 'redirect' para redirecionar o usuário
 from main.bd_config import conecta_no_banco_de_dados  # Função personalizada para conectar-se ao banco de dados
 from .forms import ContatoForm, LoginForm  # Importa o formulário personalizado 'ContatoForm' para manipulação de dados do usuário
+from .forms import CadastroForm
+from .models import Usuario
 from django.shortcuts import render  # Usado para renderizar templates HTML com dados contextuais
-from django.contrib.auth import authenticate, login, logout  # Funções de autenticação para autenticar, logar e deslogar usuários
+from django.contrib.auth import authenticate, login  # Funções de autenticação para autenticar, logar e deslogar usuários
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User  # Modelo de usuário padrão do Django, para criação e manipulação de usuários
 #from django.contrib.auth.decorators import login_required  # Para proteger views que exigem um usuário autenticado (comentado)
 from django.views.decorators.csrf import csrf_protect  # Ativa a proteção CSRF para uma view específica
@@ -59,49 +62,42 @@ def login(request):
         form = LoginForm()
 
     return render(request, 'login.html', {'form': form})
-# def login(request):
-#     request.session['usuario_id'] =""
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('/login')
+
+def registro(request):
     
-#     try:
-#         # Tentar estabelecer conexão com o banco de dados (dentro do bloco POST)
-#         if request.method == 'POST':
-#             bd = conecta_no_banco_de_dados()
+    if request.method == 'POST':
+        form = CadastroForm(request.POST)
 
-#             # Extrair credenciais do usuário do formulário enviado
-#             email = request.POST['username']
-#             senha = request.POST['password']
-#             # usuario1 = authenticate(username=request.POST['username'], password=request.POST['password'])
-#              # Validar as credenciais
-#             cursor = bd.cursor()
-#             cursor.execute("""
-#                         SELECT *
-#                         FROM usuarios
-#                         WHERE email = %s AND senha = %s;
-#                     """, (email, senha,))
-#             usuario = cursor.fetchone()
-#             cursor.close()
-#             bd.close()
-#             if usuario:
-#                 request.session['usuario_id'] = usuario[0]  # Iniciar sessão do usuário
-                
-              
-#                 return redirect('paginainicial')                     
-#             else:
-#                 print('Email ou senha inválidos.')
-#                     # Autenticação falhou, exibir mensagem de erro
-#                 mensagem_erro = 'Email ou senha inválidos.'
-#                 return render(request, 'login.html', {'mensagem_erro': mensagem_erro})
-             
+        if form.is_valid():
+            # Extrair os dados do formulário
+            nome = form.cleaned_data['nome']
+            email = form.cleaned_data['email']
+            senha = form.cleaned_data['senha']
 
-#         else:
-#             # Se não for uma solicitação POST, renderizar o formulário de login
-#             return render(request, 'login.html')
-        
+            # Conectar ao banco de dados (usando Django ORM)
+            bd = conecta_no_banco_de_dados()
+            cursor = bd.cursor()
 
-#     except Exception as e:
-#         # Se ocorrer um erro de conexão, exibir mensagem de erro
-#         mensagem_erro = f"Erro ao conectar ao banco de dados: {e}"
-#         return render(request, 'login.html', {'mensagem_erro': mensagem_erro})
+            sql = '''INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)'''
+
+            # Executar o comando com os valores
+            cursor.execute(sql, (nome, email, senha))
+
+            # Confirmar a transação
+            bd.commit()
+
+            # Salva o ID do usuário na sessão
+            return redirect('login')  # Redireciona para a página inicial
+
+    else:
+        form = CadastroForm()
+
+    return render(request, 'cadastro_usuario.html', {'form': form})
+
 def paginainicial(request):
         if not request.session.get('usuario_id'):
             return redirect('/')
@@ -131,6 +127,27 @@ def paginainicial(request):
         
 def home(request):
     products = []
+    if not request.session.get('usuario_id'):
+        return redirect('/login')
+    
+    usuario_id = request.session['usuario_id']
+    print(usuario_id)
+
+    # Conecte-se ao banco de dados e recupere o nome do usuário
+    bd = conecta_no_banco_de_dados()
+    cursor = bd.cursor()
+    
+    # Execute a consulta para buscar o nome do usuário
+    cursor.execute('SELECT nome FROM usuarios WHERE usuario_id = %s;', (usuario_id,))
+    usuario = cursor.fetchone()
+    
+    cursor.close()
+    bd.close()
+
+    if usuario:
+        nome_usuario = usuario[0]  # Assumindo que "nome" está na primeira posição
+    else:
+        nome_usuario = 'Usuário não encontrado'
 
     try:
         # Conectando ao banco de dados
@@ -151,7 +168,7 @@ def home(request):
             con.close()
     
 
-        return render(request,'home.html', {'produtos': products})
+    return render(request, 'home.html', {'produtos': products, 'nome_usuario': nome_usuario})
 
 
 def carrinho(request):

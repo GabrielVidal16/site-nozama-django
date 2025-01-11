@@ -25,7 +25,7 @@ header {
 
 .welcome {
     position: absolute;  /* Posicionamento absoluto */
-    left: 130px;  /* Alinha à esquerda */
+    right: 1600px;  /* Alinha à esquerda */
     top: 10px;  /* Alinha no topo */
     font-weight: bold; /* Deixa o texto em negrito */
     font-size: 3em;

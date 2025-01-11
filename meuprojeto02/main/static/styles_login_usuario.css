@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Organiza os elementos em uma coluna */
+    align-items: center;    /* Centraliza horizontalmente */
+    justify-content: start; /* Alinha no topo */
+    background-color: #f0f0f0;
+    height: 100vh;          /* Altura total da viewport */
+}
+.faixa {
+    background-color: #ffffffcc;
+    height: 200px;
+    width: 100%;
+    text-align: center;
+    line-height: 200px;
+    color: #000000b4;
+    font-size: 150px;
+    font-family: sans-serif;
+    
+    z-index: 2;
+    position: relative;
+    border: 5px solid #000000;
+}
+
+
+.login {
+    background-color: #13030fb9;
+    margin-top: 20px;       /* Espaço entre a faixa e o cadastro */
+    height: 100px;
+    width: 500px;
+    text-align: center;
+    line-height: 100px;
+    color: rgb(250, 0, 187);
+    font-size: 50px;
+    font-family: sans-serif;
+    border-radius: 78px;
+}
+
+/* Estilo para a caixa central */
+.caixa {
+    width: 400px;
+    height: 500px;
+    background-color: #13030fb9;
+    display: flex;
+    flex-direction: column; /* Para alinhar o formulário verticalmente */
+    justify-content: center;
+    align-items: center;
+    color: #e4dcdc;
+    font-size: 11px;
+    position: absolute;
+    top: 66%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 78px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo do formulário */
+form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilo dos inputs e botões */
+label {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #850585;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #6a046a;
+}
+
+.btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    color: #fff;
+    background-color: #850585; /* Cor inicial */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transição suave corrigida */
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Efeito ao passar o mouse */
+.btn:hover {
+    background-color: #6a046a; /* Cor mais escura ao passar o mouse */
+}
+

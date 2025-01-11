@@ -11,38 +11,38 @@
     <header>
         <div class="nome-site">NOZAMA</div>
         <div class="buttons">
-            {% if not logged_in %}
-                <button onclick="window.location.href='/registro'">Registrar</button>
-                <button onclick="window.location.href='/login'">Logar</button>
-            {% elif logged_in %}
-                <button onclick="window.location.href='/logout'">Logout</button>
+            {% if not nome_usuario %}
+                <a href="{% url 'login' %}">
+                    <button type="button" class="btn">Login</button>
+                </a>
+                <a href="{% url 'registro' %}">
+                    <button type="button" class="btn">Registro</button>
+                </a>
+            {% else %}
+                <h1 class="welcome">{{ nome_usuario }}</h1>
+                <form method="POST" action="{% url 'logout_view' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Logout</button>
+                </form>
             {% endif %}
-            {% comment %} <button onclick="window.location.href='/carrinho'">Carrinho</button> {% endcomment %}
-            <button onclick="window.location.href='/carrinho'" class="button">Carrinho</button>
-
-            
+            <a href="{% url 'carrinho' %}">
+                <button type="button" class="btn">Carrinho</button>
+            </a>
         </div>
     </header>
 
     <div class="main-content">
-        <h1>Bem-vindo ao site!</h1>
-
+        <h1>Bem-vindo</h1>
         <div class="product-grid">
             {% for produto in produtos %}
             <div class="product-card">
                 <img src="{% static 'images/' %}{{ produto.imagem }}" alt="{{ produto.nome }}">
                 <h3>{{ produto.nome }}</h3>
                 <p>R$ {{ produto.preco }}</p>
-                <form method="POST" action="/adicionar_ao_carrinho/{{ produto.produto_id }}">
-                    {% csrf_token %}  <!-- Adiciona o token CSRF aqui -->
-                    <button id="adicionarCarrinho" type="submit">Adicionar ao Carrinho</button>
-                </form>
-                
-                {% comment %} <form action="{% url 'adicionar_ao_carrinho' produto_id=produto.id %}" method="POST" onsubmit="desativarBotao(this)">
+                <form method="POST" action="{% url 'adicionar_ao_carrinho' produto_id=produto.produto_id %}">
                     {% csrf_token %}
                     <button id="adicionarCarrinho" type="submit">Adicionar ao Carrinho</button>
-                </form> {% endcomment %}
-
+                </form>
                 <script>
                     function desativarBotao(form) {
                         var botao = form.querySelector("button");
@@ -50,13 +50,16 @@
                         botao.innerText = "Adicionado ao Carrinho";  // Muda o texto do botão
                     }
                 </script>
-
-                {% comment %} <form action="{% url 'carrinho_bp.comprar_produto' produto_id=produto.id %}" method="POST">
-                    <button type="submit">Comprar Agora</button>
-                </form> {% endcomment %}
             </div>
             {% endfor %}
         </div>
     </div>
+
+    <script>
+        window.addEventListener('beforeunload', function (event) {
+            // Faz a requisição para o logout
+            navigator.sendBeacon("{% url 'logout_view' %}");
+        });
+    </script>
 </body>
 </html>
