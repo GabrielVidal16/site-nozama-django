@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Compra</title>
+    <link rel="stylesheet" href="{% static 'css/styles_compra_finalizada.css' %}">
+</head>
+<body>
+    <h1>Confirmação de Compra</h1>
+    <div>
+        <h2>{{ produto.nome }}</h2>
+        <p>Preço: R$ {{ produto.preco }}</p>
+    </div>
+    <form action="{% url 'carrinho_bp:finalizar_compra' produto.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Comprar</button>
+    </form>
+    <button onclick="window.history.back()">Voltar</button>
+</body>
+</html>

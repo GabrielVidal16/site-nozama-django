@@ -50,6 +50,8 @@ def login(request):
             # Se o usuário for encontrado
             if usuario:
                 request.session['usuario_id'] = usuario[0]  # Salva o ID do usuário na sessão
+                request.session['perfil'] = usuario[4]
+                print(usuario[4])
                 return redirect('home')  # Redireciona para a página inicial
 
             else:
@@ -119,7 +121,7 @@ def home(request):
     if usuario:
         nome_usuario = usuario[0]  # Assumindo que "nome" está na primeira posição
         perfil = usuario[1]
-        print(perfil)
+        
 
     else:
         nome_usuario = 'Usuário não encontrado'
@@ -167,6 +169,8 @@ def carrinho(request):
     contexto = {"itens": itens_renderizados, "total_carrinho": total_carrinho_formatado}
     
     return render(request, 'carrinho_de_compras.html', contexto)
+
+def finalizar_compra
 
 def adicionar_ao_carrinho(request, produto_id):
     # Lista de produtos disponíveis
@@ -249,8 +253,23 @@ def produtos(request):
     if not request.session.get('usuario_id'):
             return redirect('/login')
     
-    perfil = request.session.get('perfil')
-    if perfil and perfil == 'usuario':
+
+    usuario_id = request.session['usuario_id']
+
+    bd = conecta_no_banco_de_dados()
+    cursor = bd.cursor()
+    
+    cursor.execute('SELECT perfil FROM usuarios WHERE usuario_id = %s;', (usuario_id,))
+    usuario = cursor.fetchone()
+    
+    cursor.close()
+    bd.close()
+
+    if usuario:
+        perfil = usuario[0]
+        
+    print(perfil)
+    if perfil == 'usuario':
         return redirect('home')
 
     else:
@@ -259,7 +278,6 @@ def produtos(request):
         cursor.execute('SELECT * FROM produtos;')
         produtos = cursor.fetchall()
 
-        # Renderize o template HTML com os contatos recuperados
         return render(request, 'produtos.html', {"produtos": produtos})
 
 def excluirproduto(request,id):

@@ -59,11 +59,5 @@
         </div>
     </div>
 
-    <script>
-        window.addEventListener('beforeunload', function (event) {
-            // Faz a requisição para o logout
-            navigator.sendBeacon("{% url 'logout_view' %}");
-        });
-    </script>
 </body>
 </html>
