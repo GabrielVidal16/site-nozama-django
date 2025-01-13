@@ -146,6 +146,10 @@ def home(request):
 
 
 def carrinho(request):
+    # Recupera o carrinho da sessão, ou inicializa um carrinho vazio
+    itens = request.session.get('cart', {})
+
+    # Calcula o total do carrinho
     total_carrinho = sum(item["preco"] * item["quantidade"] for item in itens.values())
     
     # Prepara os dados para renderizar no template
@@ -163,11 +167,8 @@ def carrinho(request):
     contexto = {"itens": itens_renderizados, "total_carrinho": total_carrinho_formatado}
     
     return render(request, 'carrinho_de_compras.html', contexto)
-    
 
-def adicionar_ao_carrinho(request,produto_id):
-    
-    
+def adicionar_ao_carrinho(request, produto_id):
     # Lista de produtos disponíveis
     produtos = [
         {"produto_id": 1, "nome": "Elefante Psíquico de Guerra Pré-Histórico", "preco": 100.00, "imagem": "produto 1.jpeg"},
@@ -177,20 +178,27 @@ def adicionar_ao_carrinho(request,produto_id):
 
     # Encontrar o produto com o ID correspondente
     produto = next((p for p in produtos if p["produto_id"] == produto_id), None)
-
-    if produto:
-        # Se o produto já está no carrinho, incrementa a quantidade
-        if produto_id in itens:
-            itens[produto_id]["quantidade"] += 1
-        else:
-            # Adiciona o produto ao carrinho com quantidade inicial de 1
-            itens[produto_id] = {
-                "produto_id": produto["produto_id"],
-                "nome": produto["nome"],
-                "preco": produto["preco"],
-                "quantidade": 1,
-            }
     
+    if not produto:
+        return HttpResponse(status=404)  # Produto não encontrado
+
+    # Recupera o carrinho da sessão, ou inicializa um carrinho vazio
+    cart = request.session.get('cart', {})
+
+    # Se o produto já está no carrinho, incrementa a quantidade
+    if produto_id in cart:
+        cart[produto_id]["quantidade"] += 1
+    else:
+        # Adiciona o produto ao carrinho com quantidade inicial de 1
+        cart[produto_id] = {
+            "produto_id": produto["produto_id"],
+            "nome": produto["nome"],
+            "preco": produto["preco"],
+            "quantidade": 1,
+        }
+
+    # Salva o carrinho atualizado na sessão
+    request.session['cart'] = cart
     
     return HttpResponse(status=204)
 
@@ -239,13 +247,18 @@ def editarproduto(request,id):
 
 def produtos(request):
     if not request.session.get('usuario_id'):
-            return redirect('/')
+            return redirect('/login')
+    
+    perfil = request.session.get('perfil')
+    if perfil and perfil == 'usuario':
+        return redirect('home')
+
     else:
         bd = conecta_no_banco_de_dados()
         cursor = bd.cursor()
         cursor.execute('SELECT * FROM produtos;')
         produtos = cursor.fetchall()
-        
+
         # Renderize o template HTML com os contatos recuperados
         return render(request, 'produtos.html', {"produtos": produtos})
 
