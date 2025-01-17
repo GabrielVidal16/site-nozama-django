@@ -1,3 +1,4 @@
+import datetime
 from django.http import HttpResponseRedirect  # Usado para redirecionar o usuário para uma nova URL
 from django.shortcuts import render, redirect
 import mysql  # 'render' para renderizar templates e 'redirect' para redirecionar o usuário
@@ -23,11 +24,11 @@ itens = {}
 def login(request):
     request.session['usuario_id'] = ""
 
-    # Se for uma solicitação POST, valida o login
+    
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
-        # Verifique se o formulário foi validado corretamente
+        
         if form.is_valid():
             # Extrair as credenciais do formulário
             email = form.cleaned_data['email']
@@ -75,25 +76,25 @@ def registro(request):
         form = CadastroForm(request.POST)
 
         if form.is_valid():
-            # Extrair os dados do formulário
+         
             nome = form.cleaned_data['nome']
             email = form.cleaned_data['email']
             senha = form.cleaned_data['senha']
 
-            # Conectar ao banco de dados (usando Django ORM)
+            
             bd = conecta_no_banco_de_dados()
             cursor = bd.cursor()
 
             sql = '''INSERT INTO usuarios (nome, email, senha, perfil) VALUES (%s, %s, %s,"usuario")'''
 
-            # Executar o comando com os valores
+            
             cursor.execute(sql, (nome, email, senha))
 
-            # Confirmar a transação
+            
             bd.commit()
 
-            # Salva o ID do usuário na sessão
-            return redirect('login')  # Redireciona para a página inicial
+            
+            return redirect('login')  
 
     else:
         form = CadastroForm()
@@ -107,11 +108,11 @@ def home(request):
     
     usuario_id = request.session['usuario_id']
 
-    # Conecte-se ao banco de dados e recupere o nome do usuário
+    
     bd = conecta_no_banco_de_dados()
     cursor = bd.cursor()
     
-    # Execute a consulta para buscar o nome do usuário
+    
     cursor.execute('SELECT nome, perfil FROM usuarios WHERE usuario_id = %s;', (usuario_id,))
     usuario = cursor.fetchone()
     
@@ -119,7 +120,7 @@ def home(request):
     bd.close()
 
     if usuario:
-        nome_usuario = usuario[0]  # Assumindo que "nome" está na primeira posição
+        nome_usuario = usuario[0]  
         perfil = usuario[1]
         
 
@@ -127,20 +128,20 @@ def home(request):
         nome_usuario = 'Usuário não encontrado'
 
     try:
-        # Conectando ao banco de dados
+        
         con = conecta_no_banco_de_dados()
-        cursor = con.cursor(dictionary=True)  # Use dictionary=True para retornar resultados como dicionários
+        cursor = con.cursor(dictionary=True)  
         cursor.execute('SELECT * FROM produtos')
-        products = cursor.fetchall()  # Use fetchall() para obter todos os registros
+        products = cursor.fetchall()  
 
     except mysql.connector.Error as error:
         print(f"Falha ao executar a consulta: {error}")
         return "Ocorreu um erro ao buscar os dados.", 500
 
     finally:
-        if cursor:  # Verifica se o cursor foi inicializado
+        if cursor:  
             cursor.close()
-        if con and con.is_connected():  # Verifica se a conexão foi estabelecida e está aberta
+        if con and con.is_connected(): 
             con.close()
     
 
@@ -148,52 +149,96 @@ def home(request):
 
 
 def carrinho(request):
-    # Recupera o carrinho da sessão, ou inicializa um carrinho vazio
+   
     itens = request.session.get('cart', {})
 
-    # Calcula o total do carrinho
+    
     total_carrinho = sum(item["preco"] * item["quantidade"] for item in itens.values())
     
-    # Prepara os dados para renderizar no template
+    
     itens_renderizados = [
         {
             "nome": item["nome"],
-            "preco": f"{item['preco']:.2f}",  # Formata o preço unitário
+            "preco": f"{item['preco']:.2f}",  
             "quantidade": item["quantidade"],
-            "total": f"{item['preco'] * item['quantidade']:.2f}"  # Formata o total por produto
+            "total": f"{item['preco'] * item['quantidade']:.2f}"  
         } for item in itens.values()
     ]
     
-    # Formata o total geral
+   
     total_carrinho_formatado = f"{total_carrinho:.2f}"
     contexto = {"itens": itens_renderizados, "total_carrinho": total_carrinho_formatado}
     
     return render(request, 'carrinho_de_compras.html', contexto)
 
-def finalizar_compra
+def finalizar_compra(request):
+    itens = request.session.get('cart', {})
+    total_carrinho = sum(item["preco"] * item["quantidade"] for item in itens.values())
+    itens_renderizados = [
+        {
+            "nome": item["nome"],
+            "preco": f"{item['preco']:.2f}",  
+            "quantidade": item["quantidade"],
+            "total": f"{item['preco'] * item['quantidade']:.2f}" 
+        } for item in itens.values()
+    ]
+    total_carrinho_formatado = f"{total_carrinho:.2f}"
+    contexto = {"itens": itens_renderizados, "total_carrinho": total_carrinho_formatado}
+    
+    return render(request, 'compra_finalizada.html', contexto)
+
+def compras(request):
+    usuario_id = request.session['usuario_id']
+    itens = request.session.get('cart', {})
+
+    if not itens:
+        return redirect('cart')  
+
+    bd = conecta_no_banco_de_dados()
+    cursor = bd.cursor()
+
+    
+    for item_id, item in itens.items():
+        produto_id = item_id
+        data_compra = datetime.datetime.now()
+
+        sql = '''INSERT INTO usuario_compras (usuario_id, produto_id, data_compra)
+                VALUES (%s, %s, %s)'''
+        
+        cursor.execute(sql, (usuario_id, produto_id, data_compra)) 
+
+    
+    bd.commit()
+    cursor.close()
+    bd.close()
+
+    request.session['cart'] = {}
+
+    return redirect('home')
+
+
 
 def adicionar_ao_carrinho(request, produto_id):
-    # Lista de produtos disponíveis
+    
     produtos = [
         {"produto_id": 1, "nome": "Elefante Psíquico de Guerra Pré-Histórico", "preco": 100.00, "imagem": "produto 1.jpeg"},
         {"produto_id": 2, "nome": "Lâmina do Caos", "preco": 150.00, "imagem": "produto 2.jpeg"},
         {"produto_id": 3, "nome": "Livro Misterioso", "preco": 200.00, "imagem": "produto 3.jpg"},
     ]
 
-    # Encontrar o produto com o ID correspondente
+    
     produto = next((p for p in produtos if p["produto_id"] == produto_id), None)
     
     if not produto:
-        return HttpResponse(status=404)  # Produto não encontrado
+        return HttpResponse(status=404) 
 
-    # Recupera o carrinho da sessão, ou inicializa um carrinho vazio
+    
     cart = request.session.get('cart', {})
 
-    # Se o produto já está no carrinho, incrementa a quantidade
     if produto_id in cart:
         cart[produto_id]["quantidade"] += 1
     else:
-        # Adiciona o produto ao carrinho com quantidade inicial de 1
+       
         cart[produto_id] = {
             "produto_id": produto["produto_id"],
             "nome": produto["nome"],
@@ -201,7 +246,7 @@ def adicionar_ao_carrinho(request, produto_id):
             "quantidade": 1,
         }
 
-    # Salva o carrinho atualizado na sessão
+ 
     request.session['cart'] = cart
     
     return HttpResponse(status=204)
@@ -239,11 +284,11 @@ def editarproduto(request,id):
             )
             values = (nome, preco,produto_id)
             cursor.execute(sql, values)
-            bd.commit()  # Assumindo que você tenha gerenciamento de transações
+            bd.commit() 
             cursor.close()
             bd.close()
 
-            # Redirecione para a página de sucesso ou exiba a mensagem de confirmação
+            
             return redirect('home')     
 
         # Exiba o formulário (assumindo lógica de renderização)
