@@ -1,20 +1,25 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmar Compra</title>
-    <link rel="stylesheet" href="{% static 'css/styles_compra_finalizada.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles_compra_finalizada.css' %}">
 </head>
 <body>
     <h1>Confirmação de Compra</h1>
     <div>
-        <h2>{{ produto.nome }}</h2>
-        <p>Preço: R$ {{ produto.preco }}</p>
+        {% for item in itens %}
+        <h2>{{ item.nome }}</h2>
+        <p>Preço: R$ {{ item.preco }}</p>
+        <p>Quantidade: {{ item.quantidade }}</p>
+        {% endfor %}
+        <h1>total: R$ {{ total_carrinho }}</h1>
     </div>
-    <form action="{% url 'carrinho_bp:finalizar_compra' produto.id %}" method="POST">
+    <form method="POST" action="{% url 'compras' %}">
         {% csrf_token %}
-        <button type="submit">Comprar</button>
+        <button id="Comprar" type="submit">Comprar</button>
     </form>
     <button onclick="window.history.back()">Voltar</button>
 </body>

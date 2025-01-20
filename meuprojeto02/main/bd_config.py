@@ -58,7 +58,8 @@ def conecta_no_banco_de_dados():
         cursor.execute(''' 
             CREATE TABLE usuario_compras (
                 usuario_id INT NOT NULL, 
-                produto_id INT NOT NULL,  
+                produto_id INT NOT NULL,
+                data_compra TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  
                 PRIMARY KEY (usuario_id, produto_id), 
                 FOREIGN KEY (usuario_id) REFERENCES usuarios(usuario_id) ON DELETE CASCADE, 
                 FOREIGN KEY (produto_id) REFERENCES produtos(produto_id) ON DELETE CASCADE
@@ -89,5 +90,27 @@ def conecta_no_banco_de_dados():
     except mysql.connector.Error as err:
         print("Erro de conexão com o banco de dados:", err)
         raise
+    
+
+    try:
+        produtos = [
+        {"produto_id": 1, "nome": "Elefante Psíquico de Guerra Pré-Histórico", "preco": 100.00, "imagem": "produto 1.jpeg"},
+        {"produto_id": 2, "nome": "Lâmina do Caos", "preco": 150.00, "imagem": "produto 2.jpeg"},
+        {"produto_id": 3, "nome": "Livro Misterioso", "preco": 200.00, "imagem": "produto 3.jpg"},
+        ]
+
+        # Insere os produtos na tabela
+        for produto in produtos:
+            cursor.execute('''
+            INSERT INTO produtos (produto_id, nome, preco, imagem)
+            VALUES (:produto_id, :nome, :preco, :imagem)
+            ''', produto)
+    except mysql.connector.Error as err:
+        print("Erro de conexão com o banco de dados:", err)
+        raise
+    cnx.commit()
+    cnx.close()
+    # Salva as mudanças e fecha a conexão
+    
 
     return bd
