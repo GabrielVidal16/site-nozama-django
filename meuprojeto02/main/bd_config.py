@@ -66,6 +66,14 @@ def conecta_no_banco_de_dados():
             );
         ''')
 
+        cursor.execute('''
+            INSERT INTO produtos (produto_id, nome, preco, imagem)
+            VALUES 
+            (1, 'Elefante Psíquico de Guerra Pré-Histórico', 100.00, 'produto 1.jpeg'),
+            (2, 'Lâmina do Caos', 150.00, 'produto 2.jpeg'),
+            (3, 'Livro Misterioso', 200.00, 'produto 3.jpg')
+        ''')
+
         # Inserir dados iniciais na tabela 'usuarios'
         nome = "Professor Lucas"
         email = "peres@peres.com"
@@ -92,24 +100,7 @@ def conecta_no_banco_de_dados():
         raise
     
 
-    try:
-        produtos = [
-        {"produto_id": 1, "nome": "Elefante Psíquico de Guerra Pré-Histórico", "preco": 100.00, "imagem": "produto 1.jpeg"},
-        {"produto_id": 2, "nome": "Lâmina do Caos", "preco": 150.00, "imagem": "produto 2.jpeg"},
-        {"produto_id": 3, "nome": "Livro Misterioso", "preco": 200.00, "imagem": "produto 3.jpg"},
-        ]
 
-        # Insere os produtos na tabela
-        for produto in produtos:
-            cursor.execute('''
-            INSERT INTO produtos (produto_id, nome, preco, imagem)
-            VALUES (:produto_id, :nome, :preco, :imagem)
-            ''', produto)
-    except mysql.connector.Error as err:
-        print("Erro de conexão com o banco de dados:", err)
-        raise
-    cnx.commit()
-    cnx.close()
     # Salva as mudanças e fecha a conexão
     
 
