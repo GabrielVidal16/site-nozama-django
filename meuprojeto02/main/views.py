@@ -170,8 +170,6 @@ def carrinho(request):
     
     return render(request, 'carrinho_de_compras.html', contexto)
 
-def finalizar_compra
-
 def adicionar_ao_carrinho(request, produto_id):
     # Lista de produtos disponíveis
     produtos = [
