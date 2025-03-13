@@ -1,19 +1,19 @@
-/* Reset básico */
+
 body {
     margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    background-color: rgb(255, 251, 251); /* Cor de fundo */
+    background-color: rgb(255, 251, 251); 
     height: 100vh;
-    overflow: hidden; /* Impede que os elementos saiam da tela */
-    position: relative; /* Necessário para posicionar o pseudo-elemento corretamente */
+    overflow: hidden; 
+    position: relative; 
 }
 
 
 
-/* Faixa de destaque */
+
 .faixa {
     background-color: #ffffffcc;
     height: 200px;
@@ -29,12 +29,12 @@ body {
     border: 5px solid #000000;
 }
 
-/* Linha ondulada */
+
 .linha-ondulada {
     width: 300%;
-    height: 100px; /* Ajuste a altura conforme necessário */
+    height: 100px; 
     position: absolute;
-    bottom: 0; /* Fixa a linha ondulada na parte inferior da tela */
+    bottom: 0; 
     z-index: 1;
 }
 
@@ -45,11 +45,10 @@ body {
 
 .linha-ondulada path {
     fill:#ffffffcc;
-    stroke: #000000b4; /* Cor da onda */
+    stroke: #000000b4; 
     stroke-width: 10;
 }
 
-/* Cadastro */
 .cadastro {
     background-color: #13030fb9;
     margin-top: 20px;
@@ -64,7 +63,6 @@ body {
     z-index: 2;
 }
 
-/* Caixa de cadastro */
 .caixa {
     width: 400px;
     height: 500px;
@@ -84,7 +82,6 @@ body {
     z-index: 2;
 }
 
-/* Estilo do formulário */
 form {
     width: 80%;
     display: flex;
@@ -92,7 +89,7 @@ form {
     align-items: center;
 }
 
-/* Estilo dos inputs e botões */
+
 label {
     margin-top: 15px;
     font-size: 17px;
@@ -127,7 +124,7 @@ input[type="submit"]:hover {
     background-color: #6a046a;
 }
 
-/* Estilo do botão */
+
 .btn {
     margin-top: 20px;
     padding: 10px 20px;
@@ -142,7 +139,6 @@ input[type="submit"]:hover {
     display: inline-block;
 }
 
-/* Efeito ao passar o mouse */
 .btn:hover {
     background-color: #6a046a;
 }

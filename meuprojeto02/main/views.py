@@ -30,14 +30,14 @@ def login(request):
 
         
         if form.is_valid():
-            # Extrair as credenciais do formulário
+           
             email = form.cleaned_data['email']
             senha = form.cleaned_data['senha']
 
-            # Conectar ao banco de dados
+            
             bd = conecta_no_banco_de_dados()
 
-            # Verificar as credenciais no banco de dados
+            
             cursor = bd.cursor()
             cursor.execute("""
                         SELECT *
@@ -48,7 +48,7 @@ def login(request):
             cursor.close()
             bd.close()
 
-            # Se o usuário for encontrado
+            
             if usuario:
                 request.session['usuario_id'] = usuario[0]  # Salva o ID do usuário na sessão
                 request.session['perfil'] = usuario[4]
@@ -56,12 +56,12 @@ def login(request):
                 return redirect('home')  # Redireciona para a página inicial
 
             else:
-                # Se não encontrar o usuário, exibe uma mensagem de erro
+                
                 mensagem_erro = 'Email ou senha inválidos.'
                 return render(request, 'login.html', {'form': form, 'mensagem_erro': mensagem_erro})
 
     else:
-        # Caso contrário, cria um formulário vazio
+        
         form = LoginForm()
 
     return render(request, 'login.html', {'form': form})
@@ -291,7 +291,7 @@ def editarproduto(request,id):
             
             return redirect('home')     
 
-        # Exiba o formulário (assumindo lógica de renderização)
+        
         return render(request, 'editarproduto.html',{'id': produto_id})
 
 def produtos(request):
@@ -331,11 +331,11 @@ def excluirproduto(request,id):
             return redirect('/login')
     else:
         try:
-            # Estabelecer conexão com o banco de dados (substitua 'seu_banco_de_dados' pelo nome real)
+            
             bd =conecta_no_banco_de_dados()
             cursor = bd.cursor()
 
-            # Evitar SQL injection usando parâmetros nomeados
+            
             sql = (
                 """
                 DELETE FROM produtos WHERE produto_id = %s;

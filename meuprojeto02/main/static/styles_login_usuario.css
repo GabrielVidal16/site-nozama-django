@@ -1,11 +1,11 @@
 body {
     margin: 0;
     display: flex;
-    flex-direction: column; /* Organiza os elementos em uma coluna */
-    align-items: center;    /* Centraliza horizontalmente */
-    justify-content: start; /* Alinha no topo */
+    flex-direction: column;
+    align-items: center;   
+    justify-content: start;
     background-color: #f0f0f0;
-    height: 100vh;          /* Altura total da viewport */
+    height: 100vh;         
 }
 .faixa {
     background-color: #ffffffcc;
@@ -25,7 +25,7 @@ body {
 
 .login {
     background-color: #13030fb9;
-    margin-top: 20px;       /* Espaço entre a faixa e o cadastro */
+    margin-top: 20px;      
     height: 100px;
     width: 500px;
     text-align: center;
@@ -36,13 +36,13 @@ body {
     border-radius: 78px;
 }
 
-/* Estilo para a caixa central */
+
 .caixa {
     width: 400px;
     height: 500px;
     background-color: #13030fb9;
     display: flex;
-    flex-direction: column; /* Para alinhar o formulário verticalmente */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: #e4dcdc;
@@ -55,7 +55,7 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Estilo do formulário */
+
 form {
     width: 80%;
     display: flex;
@@ -63,7 +63,7 @@ form {
     align-items: center;
 }
 
-/* Estilo dos inputs e botões */
+
 label {
     margin-top: 15px;
     font-size: 18px;
@@ -101,17 +101,17 @@ input[type="submit"]:hover {
     padding: 10px 20px;
     font-size: 20px;
     color: #fff;
-    background-color: #850585; /* Cor inicial */
+    background-color: #850585;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Transição suave corrigida */
+    transition: background-color 0.3s ease;
     text-decoration: none;
     display: inline-block;
 }
 
-/* Efeito ao passar o mouse */
+
 .btn:hover {
-    background-color: #6a046a; /* Cor mais escura ao passar o mouse */
+    background-color: #6a046a;
 }
 

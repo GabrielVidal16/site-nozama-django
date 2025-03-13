@@ -1,4 +1,4 @@
-/* Estilo global */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -12,14 +12,14 @@ body {
     min-height: 100vh;
 }
 
-/* Cabeçalho principal */
+
 h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
     color: #2c3e50;
 }
 
-/* Container principal */
+
 div {
     background-color: #fff;
     padding: 20px;
@@ -30,14 +30,14 @@ div {
     width: 90%;
 }
 
-/* Nome do produto */
+
 h2 {
     font-size: 1.8em;
     color: #2c3e50;
     margin-bottom: 10px;
 }
 
-/* Preço */
+
 p {
     font-size: 1.5em;
     font-weight: bold;
@@ -45,7 +45,7 @@ p {
     margin-bottom: 20px;
 }
 
-/* Imagem do produto */
+
 img {
     max-width: 100%;
     height: auto;
@@ -53,7 +53,7 @@ img {
     border-radius: 5px;
 }
 
-/* Botões */
+
 form button, button {
     background-color: #2980b9;
     color: #fff;
@@ -70,7 +70,7 @@ form button:hover, button:hover {
     background-color: #3498db;
 }
 
-/* Botão voltar */
+
 button {
     background-color: #e74c3c;
 }

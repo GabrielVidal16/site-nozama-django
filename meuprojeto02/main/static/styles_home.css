@@ -10,41 +10,41 @@ header {
     border-bottom: 1px solid #ddd;
     padding: 10px 20px;
     display: flex;
-    justify-content: center;  /* Centraliza os itens no header */
+    justify-content: center; 
     align-items: center;
-    position: relative;  /* Permite posicionamento absoluto dos elementos filhos */
+    position: relative; 
 }
 
 .nome-site {
-    font-size: 4.5em;  /* Tamanho da fonte do nome do site */
-    color: rgb(255, 255, 255);  /* Cor do texto */
-    font-weight: bold;  /* Deixa o texto em negrito */
-    text-align: center;  /* Centraliza o texto */
-    flex: 1;  /* Faz o nome do site ocupar o espaço disponível */
+    font-size: 4.5em; 
+    color: rgb(255, 255, 255); 
+    font-weight: bold; 
+    text-align: center; 
+    flex: 1; 
 }
 
 .welcome {
-    position: absolute;  /* Posicionamento absoluto */
-    right: 1600px;  /* Alinha à esquerda */
-    top: 10px;  /* Alinha no topo */
-    font-weight: bold; /* Deixa o texto em negrito */
+    position: absolute; 
+    right: 1600px; 
+    top: 10px; 
+    font-weight: bold;
     font-size: 3em;
-    white-space: nowrap; /* Evita que o texto quebre em várias linhas */
-    overflow: hidden; /* Oculta o conteúdo que ultrapassar o limite da tela */
-    text-overflow: ellipsis; /* Adiciona "..." se o conteúdo for grande demais */
-    max-width: 100%; /* Garante que o texto não ultrapasse o limite */
-    margin: 0; /* Remove margens indesejadas */
-    padding: 5px 10px; /* Ajusta o padding para dar espaço ao redor do texto */
-    color: rgb(0, 132, 255); /* Cor do texto */
-    border-radius: 5px; /* Bordas arredondadas */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin: 0;
+    padding: 5px 10px;
+    color: rgb(0, 132, 255);
+    border-radius: 5px;
 }
 
 .btn2 {
     display: flex;
     gap: 10px;
-    position: absolute;  /* Permite posicionamento absoluto */
-    right: 1500px;  /* Posiciona o botão à direita */
-    top: 25px;  /* Alinha no topo */ 
+    position: absolute; 
+    right: 1500px; 
+    top: 25px;  
     background-color: #28ce43;
     color: rgb(255, 255, 255);
     border: none;
@@ -60,9 +60,9 @@ header {
 .botao {
     display: flex;
     gap: 10px;
-    position: absolute;  /* Permite posicionamento absoluto */
-    right: 20px;  /* Posiciona os botões à direita */
-    top: 10px;  /* Alinha no topo */
+    position: absolute; 
+    right: 20px; 
+    top: 10px; 
     background-color: #9370DB;
     color: rgb(255, 255, 255);
     border: none;
@@ -79,9 +79,9 @@ header {
 .botao2 {
     display: flex;
     gap: 10px;
-    position: absolute;  /* Permite posicionamento absoluto */
-    right: 120px;  /* Posiciona os botões à direita */
-    top: 10px;  /* Alinha no topo */
+    position: absolute; 
+    right: 120px; 
+    top: 10px; 
     background-color: #9370DB;
     color: rgb(255, 255, 255);
     border: none;
@@ -103,11 +103,11 @@ header {
 .main-content h1 {
     font-size: 2.3em;
     margin-bottom: 10px;
-    color: #ffffff;  /* Cor do texto */
-    background-color: #000000e8;  /* Cor de fundo preta (faixa atrás do texto) */
-    padding: 10px;  /* Espaçamento entre a borda e o texto */
-    border: 1px solid #000000;  /* Borda vermelha ao redor da faixa */
-    border-radius: 13px;  /* Borda arredondada, se preferir */
+    color: #ffffff; 
+    background-color: #000000e8; 
+    padding: 10px; 
+    border: 1px solid #000000; 
+    border-radius: 13px; 
 }
 
 .main-content p {
@@ -128,14 +128,14 @@ header {
     padding: 15px;
     text-align: center;
     background-color: #ffffff;
-    width: 90%;  /* Faz com que a largura da imagem ocupe toda a largura do cartão */
+    width: 90%; 
 }
 
 .product-card img {
-    width: 80%;  /* Faz com que a largura da imagem ocupe toda a largura do cartão */
-    height: 270px; /* Define uma altura fixa para todas as imagens */
-    object-fit: cover;  /* Garante que a imagem cubra toda a área sem distorcer */
-    border-radius: 10px; /* Opcional: adiciona bordas arredondadas à imagem */
+    width: 80%; 
+    height: 270px;
+    object-fit: cover; 
+    border-radius: 10px;
 }
 
 .product-card h3 {
