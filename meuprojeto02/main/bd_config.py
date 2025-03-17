@@ -69,9 +69,9 @@ def conecta_no_banco_de_dados():
         cursor.execute('''
             INSERT INTO produtos (produto_id, nome, preco, imagem)
             VALUES 
-            (1, 'Elefante Psíquico de Guerra Pré-Histórico', 100.00, 'produto 1.jpeg'),
-            (2, 'Lâmina do Caos', 150.00, 'produto 2.jpeg'),
-            (3, 'Livro Misterioso', 200.00, 'produto 3.jpg')
+            (1, 'Livro Dom Casmurro', 100.00, 'produto 1.jpeg'),
+            (2, 'Fone de ouvido', 150.00, 'produto 2.jpeg'),
+            (3, 'Mouse', 200.00, 'produto 3.jpg')
         ''')
 
        
