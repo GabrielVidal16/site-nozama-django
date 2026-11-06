@@ -20,11 +20,11 @@ Editar Produto
                 <h1 style="text-align: center; font-size: 25px; font-family: Segoe UI;">
             Por favor, edite os dados do Produto
        
-                <form method="POST" action="/editarproduto/{{ id }}">
+                <form method="POST" action="{% url 'editarproduto' produto_id=produto.id %}">
                     {% csrf_token %}  <div>
-                <input style="margin: 5px" class="inputlogin" type="text" name="nome" placeholder="Nome" >
+                <input style="margin: 5px" class="inputlogin" type="text" name="nome" placeholder="Nome" value="{{ produto.nome }}" required>
             <div>
-                <input style="margin: 5px" class="inputlogin" type="number" name="preco" placeholder="preco" step="0.01" min="0" >
+                <input style="margin: 5px" class="inputlogin" type="number" name="preco" placeholder="preco" step="0.01" min="0" value="{{ produto.preco }}" required>
             </div>
     </div>
        

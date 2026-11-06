@@ -41,11 +41,14 @@ produto
       <tbody>
           {% for produto in produtos %}
               <tr>
-                  <td>{{ produto.1 }}</td>
-                  <td>{{ produto.2 }}</td>
+                  <td>{{ produto.nome }}</td>
+                  <td>{{ produto.preco }}</td>
                   <td>
-                    <a href="/excluirproduto/{{ produto.0}}" class="excluir">Excluir</a>
-                    <a href="/editarproduto/{{ produto.0}}" class="editar">Editar</a>
+                    <form method="post" action="{% url 'excluirproduto' produto_id=produto.id %}" style="display:inline">
+                      {% csrf_token %}
+                      <button type="submit" class="excluir">Excluir</button>
+                    </form>
+                    <a href="{% url 'editarproduto' produto_id=produto.id %}" class="editar">Editar</a>
                   
                 </td>
               </tr>
